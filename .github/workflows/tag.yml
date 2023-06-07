@@ -14,8 +14,6 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: "18"
-      - name: NPM Install
-        run: npm ci
       - name: Get tag value
         id: get_tag
         run: echo ::set-output name=TAG_VALUE::${GITHUB_REF#refs/tags/}
