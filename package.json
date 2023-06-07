@@ -1,0 +1,6 @@
+{
+  "name": "@dakota002/github-testing",
+  "scripts": {
+    "update-tags": "node update-tags.mjs"
+  }
+}

@@ -1,0 +1,23 @@
+name: Tag Auto-Updates
+
+on:
+  push:
+    tags:
+      - "*"
+
+jobs:
+  tag_update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Install Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "18"
+      - name: NPM Install
+        run: npm ci
+      - name: Get tag value
+        id: get_tag
+        run: echo ::set-output name=TAG_VALUE::${GITHUB_REF#refs/tags/}
+      - name: update-tags
+        run: npm run update-tags --tag=${{steps.get_tag.outputs.TAG_VALUE}}
