@@ -11,16 +11,12 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Extract PR title
-        id: extract_title
-        run: echo ::set-output name=PR_TITLE::${{ github.event.pull_request.title }}
-
       - name: Extract version from title
         id: extract_version
         run: |
-          PR_TITLE=${{ steps.extract_title.outputs.PR_TITLE }}
-          VERSION=$(echo "$PR_TITLE" | grep -oE '^Update version v[0-9]+\.[0-9]+\.[0-9]+.*' | head -1)
+          VERSION=$(echo "${{ github.event.pull_request.title }}" | grep -oE '^Update version v[0-9]+\.[0-9]+\.[0-9]+.*' | head -1)
           echo "::set-output name=VERSION::$VERSION"
+
       - name: Tag Commit
         if: ${{ github.event.pull_request.merged == true && steps.extract_version.outputs.VERSION != '' }}
         run: |
