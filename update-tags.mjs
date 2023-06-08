@@ -14,4 +14,4 @@ const mssg = 'Update version ' + tag
 const newBranchName = `Update-${tag}`
 console.log(`Checking out branch:${newBranchName} and pushing`)
 //execSync(`echo \"${mssg}\"`, { stdio: [0, 1, 2] })
-execSync(`git checkout -b ${newBranchName} && git add . && git commit -m \"${mssg}\" && git push --set-upstream origin ${newBranchName} && git request-pull main origin ${newBranchName}`, { stdio: [0, 1, 2] });
+execSync(`git checkout -b ${newBranchName} && git add . && git commit -m \"${mssg}\" && git push --set-upstream origin ${newBranchName}`, { stdio: [0, 1, 2] });
