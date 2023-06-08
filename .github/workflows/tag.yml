@@ -21,7 +21,7 @@ jobs:
         if: ${{ github.event.pull_request.merged == true && steps.extract_version.outputs.VERSION != '' }}
         run: |
           VERSION=${{ steps.extract_version.outputs.VERSION }}
-          git config user.name "dakota002"
-          git config user.email "dakota.d@live.com"
+          git config user.name  "${{github.actor}}"
+          git config user.email "${{github.actor}}@users.noreply.github.com"
           git tag -a $VERSION -m "Update to $VERSION"
           git push origin $VERSION
