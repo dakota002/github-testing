@@ -2,7 +2,7 @@ name: Version Auto-PR
 on:
   push:
     branches:
-      - "Update-v*"
+      - "Update-v*.*.*"
 
 jobs:
   pull-request:
