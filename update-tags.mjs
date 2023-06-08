@@ -2,6 +2,11 @@ import { execSync } from 'child_process';
 import { readFile, writeFile } from 'fs/promises'
 
 const tag = process.env.npm_config_tag
+if (!/v[0-9]+\.[0-9]+\.[0-9]+.*/.test(tag)) {
+    console.log('Version should match the pattern v#.#.#')
+    console.log('No changes made, please correct version and run again')
+    process.exit()
+}
 console.log("Run code updates")
 await writeFile("misc/testJunk.txt", `This file is updated to version ${tag}`)
 
