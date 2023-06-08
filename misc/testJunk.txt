@@ -1,4 +1,1 @@
-This is a test for adding a new commit with a tag
-New Change again...
-Hi
-Goodbye
+This file is updated to version v1.0.1
