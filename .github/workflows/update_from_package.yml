@@ -19,10 +19,10 @@ jobs:
       - name: Get versions
         id: get_versions
         run: |
-          PREVIOUS_VERSION=$(git show HEAD^:package.json | jq -r '.version')
-          echo "::set-output name=PREVIOUS_VERSION::$PREVIOUS_VERSION"
+          PREVIOUS_VERSION=$(git show HEAD~1:package.json | jq -r '.version')
+          echo "PREVIOUS_VERSION=$PREVIOUS_VERSION" >> $GITHUB_OUTPUT
           NEW_VERSION=$(git show HEAD:package.json | jq -r '.version')
-          echo "::set-output name=NEW_VERSION::$NEW_VERSION"
+          echo "NEW_VERSION=$NEW_VERSION" >> $GITHUB_OUTPUT
 
       - name: Update Links from version
         if: ${{steps.get_versions.outputs.PREVIOUS_VERSION != steps.get_versions.outputs.NEW_VERSION}}
