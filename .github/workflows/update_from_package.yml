@@ -36,6 +36,5 @@ jobs:
           git tag -a ${VERSION} -m "Update to $VERSION"
           git push origin $VERSION
           node updateTag.mjs --reset
-          git add .
-          git commit -m "Post-new-tag Revert paths to point to main"
+          git commit -a -m "Post-new-tag Revert paths to point to main"
           git push
