@@ -33,6 +33,7 @@ jobs:
           git config user.name  "${{github.actor}}"
           git config user.email "${{github.actor}}@users.noreply.github.com"
           node updateTag.mjs
+          git commit -a -m "Update File to reflect version:${VERSION}"
           git tag -a ${VERSION} -m "Update to $VERSION"
           git push origin $VERSION
           node updateTag.mjs --reset
