@@ -7,35 +7,54 @@ on:
       - "package.json"
 
 jobs:
-  build:
-    name: Build
+  tag-new-versions:
     runs-on: ubuntu-latest
-
     steps:
-      # Checkout
-      - name: Checkout
-        uses: actions/checkout@v2
+      - uses: actions/checkout@v2
         with:
-          fetch-depth: 0
-      # Check for version change
-      - name: Get versions
-        id: get_versions
+          fetch-depth: 2
+      - uses: salsify/action-detect-and-tag-new-version@v2
+        name: version
+        with:
+          version-command: |
+            node updateTag.mjs
+      - name: Reset
+        if: ${{steps.version.outputs.tag != null}}
         run: |
-          PREVIOUS_VERSION=$(git describe --tags --abbrev=0)
-          echo "PREVIOUS_VERSION=$PREVIOUS_VERSION" >> $GITHUB_OUTPUT
-          NEW_VERSION=$(git show HEAD:package.json | jq -r '.version')
-          echo "NEW_VERSION=$NEW_VERSION" >> $GITHUB_OUTPUT
-
-      - name: Update Links from version
-        if: ${{github.event.pull_request.merged == true && steps.get_versions.outputs.NEW_VERSION != steps.get_versions.outputs.PREVIOUS_VERSION && steps.get_versions.outputs.NEW_VERSION != ''}}
-        run: |
-          VERSION=${{steps.get_versions.outputs.NEW_VERSION}}
-          git config user.name  "${{github.actor}}"
-          git config user.email "${{github.actor}}@users.noreply.github.com"
-          node updateTag.mjs
-          git commit -a -m "Update File to reflect version:${VERSION}"
-          git tag -a ${VERSION} -m "Update to $VERSION"
-          git push origin $VERSION
           node updateTag.mjs --reset
           git commit -a -m "Post-new-tag Revert paths to point to main"
           git push
+
+# jobs:
+#   build:
+#     name: Build
+#     runs-on: ubuntu-latest
+
+#     steps:
+#       # Checkout
+#       - name: Checkout
+#         uses: actions/checkout@v2
+#         with:
+#           fetch-depth: 0
+#       # Check for version change
+#       - name: Get versions
+#         id: get_versions
+#         run: |
+#           PREVIOUS_VERSION=$(git describe --tags --abbrev=0)
+#           echo "PREVIOUS_VERSION=$PREVIOUS_VERSION" >> $GITHUB_OUTPUT
+#           NEW_VERSION=$(git show HEAD:package.json | jq -r '.version')
+#           echo "NEW_VERSION=$NEW_VERSION" >> $GITHUB_OUTPUT
+
+#       - name: Update Links from version
+#         if: ${{github.event.pull_request.merged == true && steps.get_versions.outputs.NEW_VERSION != steps.get_versions.outputs.PREVIOUS_VERSION && steps.get_versions.outputs.NEW_VERSION != ''}}
+#         run: |
+#           VERSION=${{steps.get_versions.outputs.NEW_VERSION}}
+#           git config user.name  "${{github.actor}}"
+#           git config user.email "${{github.actor}}@users.noreply.github.com"
+#           node updateTag.mjs
+#           git commit -a -m "Update File to reflect version:${VERSION}"
+#           git tag -a ${VERSION} -m "Update to $VERSION"
+#           git push origin $VERSION
+#           node updateTag.mjs --reset
+#           git commit -a -m "Post-new-tag Revert paths to point to main"
+#           git push
