@@ -9,7 +9,7 @@ async function main() {
         const version = JSON.parse(await readFile('package.json')).version
         //console.log(`Updating to version:${version}`)
         await writeFile('misc/testJunk.txt', `I have been updated to version:${version}`)
-        return version
+        console.log(version)
     }
 }
 
