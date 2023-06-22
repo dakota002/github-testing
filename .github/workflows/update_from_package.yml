@@ -20,7 +20,7 @@ jobs:
             git config user.name  "${{github.actor}}"
             git config user.email "${{github.actor}}@users.noreply.github.com"
             node updateTag.mjs
-            git commit -a -m "Update File to reflect version:${VERSION}"
+            git commit -q -a -m "Update File to reflect version:${VERSION}"
 
       - name: Reset
         if: ${{steps.version.outputs.tag != null}}
