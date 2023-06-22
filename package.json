@@ -1,6 +1,6 @@
 {
   "name": "github-testing",
-  "version": "v2.1.2",
+  "version": "v3.0.0",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
