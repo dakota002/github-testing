@@ -20,14 +20,14 @@ jobs:
             git config user.name  "${{github.actor}}"
             git config user.email "${{github.actor}}@users.noreply.github.com"
             node updateTag.mjs
-            git commit -q -a -m "Update File to reflect version:${VERSION}"
+            git commit -q -a -m "Updates new version"
 
       - name: Publish Release
         uses: ghalactic/github-release-from-tag@v4
 
-      - name: Reset
-        if: ${{steps.version.outputs.tag != null}}
-        run: |
-          node updateTag.mjs --reset
-          git commit -a -m "Post-new-tag Revert paths to point to main"
-          git push
+      # - name: Reset
+      #   if: ${{steps.version.outputs.tag != null}}
+      #   run: |
+      #     node updateTag.mjs --reset
+      #     git commit -a -m "Post-new-tag Revert paths to point to main"
+      #     git push
