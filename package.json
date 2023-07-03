@@ -6,7 +6,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "tags:update-code": "node update-tags.mjs",
     "tags:commit": "node git-commands.mjs",
-    "update-version": "node update-tags.mjs"
+    "version": "node update-tags.mjs",
+    "postversion": "node update-tags.mjs --reset && git commit -a -m \"Reset to main\""
   },
   "repository": {
     "type": "git",

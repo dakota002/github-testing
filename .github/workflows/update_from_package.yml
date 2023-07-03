@@ -1,8 +1,8 @@
 name: Update From Package
 on:
   push:
-    branches:
-      - main
+    tags:
+      - "*"
 
 jobs:
   tag-new-versions:
@@ -10,20 +10,24 @@ jobs:
     permissions:
       contents: write
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
+      - uses: ncipollo/release-action@v1
         with:
-          fetch-depth: 2
-      - uses: salsify/action-detect-and-tag-new-version@v2
-        id: version
-        with:
-          version-command: |
-            git config user.name  "${{github.actor}}"
-            git config user.email "${{github.actor}}@users.noreply.github.com"
-            node updateTag.mjs
-            git commit -q -a -m "Updates new version"
+          bodyFile: "changelog.md"
+      # - uses: actions/checkout@v2
+      #   with:
+      #     fetch-depth: 2
+      # - uses: salsify/action-detect-and-tag-new-version@v2
+      #   id: version
+      #   with:
+      #     version-command: |
+      #       git config user.name  "${{github.actor}}"
+      #       git config user.email "${{github.actor}}@users.noreply.github.com"
+      #       node updateTag.mjs
+      #       git commit -q -a -m "Updates new version"
 
-      - name: Publish Release
-        uses: ghalactic/github-release-from-tag@v4
+      # - name: Publish Release
+      #   uses: ghalactic/github-release-from-tag@v4
 
       # - name: Reset
       #   if: ${{steps.version.outputs.tag != null}}
