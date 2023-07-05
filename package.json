@@ -1,13 +1,13 @@
 {
   "name": "github-testing",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "tags:update-code": "node updateTag.mjs",
     "tags:commit": "node git-commands.mjs",
-    "version": "node updateTag.js && git add -A",
-    "postversion": "node updateTag.js --reset && git commit -a -m \"Reset to main\" && git push && git push --tags"
+    "version": "node updateTag.mjs && git add -A",
+    "postversion": "node updateTag.mjs --reset && git commit -a -m \"Reset to main\" && git push && git push --tags"
   },
   "repository": {
     "type": "git",
