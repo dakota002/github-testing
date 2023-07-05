@@ -7,7 +7,7 @@
     "tags:update-code": "node updateTag.mjs",
     "tags:commit": "node git-commands.mjs",
     "version": "node updateTag.mjs && git add -A",
-    "postversion": "node updateTag.mjs --reset && git commit -a -m \"Reset to main\""
+    "postversion": "node updateTag.mjs --reset && git commit -a -m \"Reset to main\" && git push && git push --tags"
   },
   "repository": {
     "type": "git",
