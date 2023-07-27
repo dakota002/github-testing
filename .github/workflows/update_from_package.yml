@@ -1,37 +1,52 @@
-name: Update From Package
+name: Main
+
 on:
   push:
     tags:
       - "*"
 
 jobs:
-  tag-new-versions:
+  build:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
     steps:
-      - uses: actions/checkout@v3
-      - uses: ncipollo/release-action@v1
-        with:
-          bodyFile: "changelog.md"
-      # - uses: actions/checkout@v2
-      #   with:
-      #     fetch-depth: 2
-      # - uses: salsify/action-detect-and-tag-new-version@v2
-      #   id: version
-      #   with:
-      #     version-command: |
-      #       git config user.name  "${{github.actor}}"
-      #       git config user.email "${{github.actor}}@users.noreply.github.com"
-      #       node updateTag.mjs
-      #       git commit -q -a -m "Updates new version"
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Release
+        uses: softprops/action-gh-release@v1
+# name: Update From Package
+# on:
+#   push:
+#     tags:
+#       - "*"
 
-      # - name: Publish Release
-      #   uses: ghalactic/github-release-from-tag@v4
+# jobs:
+#   tag-new-versions:
+#     runs-on: ubuntu-latest
+#     permissions:
+#       contents: write
+#     steps:
+#       - uses: actions/checkout@v3
+#       - uses: ncipollo/release-action@v1
+#         with:
+#           bodyFile: "changelog.md"
+# - uses: actions/checkout@v2
+#   with:
+#     fetch-depth: 2
+# - uses: salsify/action-detect-and-tag-new-version@v2
+#   id: version
+#   with:
+#     version-command: |
+#       git config user.name  "${{github.actor}}"
+#       git config user.email "${{github.actor}}@users.noreply.github.com"
+#       node updateTag.mjs
+#       git commit -q -a -m "Updates new version"
 
-      # - name: Reset
-      #   if: ${{steps.version.outputs.tag != null}}
-      #   run: |
-      #     node updateTag.mjs --reset
-      #     git commit -a -m "Post-new-tag Revert paths to point to main"
-      #     git push
+# - name: Publish Release
+#   uses: ghalactic/github-release-from-tag@v4
+
+# - name: Reset
+#   if: ${{steps.version.outputs.tag != null}}
+#   run: |
+#     node updateTag.mjs --reset
+#     git commit -a -m "Post-new-tag Revert paths to point to main"
+#     git push
